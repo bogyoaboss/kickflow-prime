@@ -1,7 +1,9 @@
 import { ShieldCheck, TrendingUp, Package } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import PriceChart from "@/components/PriceChart";
+import LegitCheckBox from "@/components/LegitCheckBox";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,6 +11,24 @@ import sneaker1 from "@/assets/sneaker-1.jpg";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const handleBuy = () => {
+    toast.success("Added to cart! Proceeding to checkout...");
+    setTimeout(() => navigate("/dashboard"), 1500);
+  };
+
+  const handleBid = () => {
+    toast.success("Your bid has been placed successfully!");
+  };
+
+  const handleSell = () => {
+    toast.success("Your item is now listed for sale!");
+  };
+
+  const handleAsk = () => {
+    toast.success("Your ask has been placed successfully!");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -92,10 +112,10 @@ const ProductDetail = () => {
                     </Button>
                   ))}
                 </div>
-                <Button size="lg" className="w-full text-lg">
+                <Button size="lg" className="w-full text-lg" onClick={handleBuy}>
                   Buy for $580
                 </Button>
-                <Button size="lg" variant="outline" className="w-full text-lg">
+                <Button size="lg" variant="outline" className="w-full text-lg" onClick={handleBid}>
                   Place Bid
                 </Button>
               </TabsContent>
@@ -111,10 +131,10 @@ const ProductDetail = () => {
                     </Button>
                   ))}
                 </div>
-                <Button size="lg" variant="secondary" className="w-full text-lg">
+                <Button size="lg" variant="secondary" className="w-full text-lg" onClick={handleSell}>
                   Sell for $545
                 </Button>
-                <Button size="lg" variant="outline" className="w-full text-lg">
+                <Button size="lg" variant="outline" className="w-full text-lg" onClick={handleAsk}>
                   Place Ask
                 </Button>
               </TabsContent>
@@ -129,8 +149,9 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        {/* Price Chart */}
-        <div className="mt-12">
+        {/* Legit Check & Price Chart */}
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <LegitCheckBox />
           <PriceChart />
         </div>
       </div>
